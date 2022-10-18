@@ -1,4 +1,4 @@
-<?php namespace CODERS\DigitalCreator\DashBoard;
+<?php namespace CODERS\DigitalCreator;
 
 defined('ABSPATH') or die;
 
