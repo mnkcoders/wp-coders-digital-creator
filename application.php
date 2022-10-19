@@ -12,18 +12,43 @@ class DigitalCreator extends CodersApp{
                 ->import('view');
         
         parent::__construct( );
-
-        //var_dump(strval($this));
-        //var_dump($this->endPoint());
-        //var_dump($this->path(strval($this)  ) );
     }
     protected final function setupAdminMenu() {
-        $menu = parent::setupAdminMenu();
+        $menu = parent::setupFrameworkMenu();
         $menu['name'] = __('Digital Creator','digital_creator');
         $menu['title'] = __('Digital Creator','digital_creator');
         $menu['icon'] = 'dashicons-art';
+        $menu['slug'] = $this->endPoint();
+        $menu['children'] = array(
+            $this->setupAdminGallery(),
+            $this->setupAdminSettings(),
+        );
+
         return $menu;
     }
+    /**
+     * @return array
+     */
+    private final function setupAdminSettings(){
+        $menu = parent::setupFrameworkMenu();
+        $menu['parent'] = $this->endPoint();
+        $menu['name'] = __('Setup','digital_creator');
+        $menu['title'] = __('Setup','digital_creator');
+        $menu['slug'] = 'setup';
+        return $menu;
+    }
+    /**
+     * @return array
+     */
+    private final function setupAdminGallery(){
+        $menu = parent::setupFrameworkMenu();
+        $menu['parent'] = $this->endPoint();
+        $menu['name'] = __('Gallery','digital_creator');
+        $menu['title'] = __('Gallery','digital_creator');
+        $menu['slug'] = 'gallery';
+        return $menu;
+    }
+
     /**
      * @param array $input
      * @return array
