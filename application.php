@@ -9,7 +9,8 @@ class DigitalCreator extends CodersApp{
     protected final function __construct(  ) {
         
         $this->import('model')
-                ->import('view');
+                ->import('view')
+                ->import('models.calendar');
         
         parent::__construct( );
     }
