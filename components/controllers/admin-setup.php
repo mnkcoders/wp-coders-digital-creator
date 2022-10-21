@@ -1,8 +1,10 @@
 <?php namespace CODERS\DigitalCreator;
 
 defined('ABSPATH') or die;
-
-final class AdminController extends \CODERS\Framework\Request{
+/**
+ * 
+ */
+final class SetupAdminController extends \CODERS\Framework\Request{
     
     /**
      * @param string $endpoint
@@ -17,18 +19,16 @@ final class AdminController extends \CODERS\Framework\Request{
      */
     protected final function default_action(array $args = array()) {
         
-        $view = $this->importView('admin');
+        $view = $this->importView('setup');
+        
         if( !is_null($view)){
-            $view->setModel($this->importModel('item'))
-                    ->setLayout('default')
-                    ->show();
+            
+            $view->setLayout('setup')->show();
             
             return true;
         }
-        else{
-            $args['error'] = __('Invalid view [admin]','digital_creator');
-        }
-        return $this->error_action( $args );
+        
+        return false;
     }
 
 
