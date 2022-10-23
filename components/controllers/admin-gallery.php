@@ -27,6 +27,39 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
         
         return false;
     }
+    protected final function file_action( array $args = array()){
+        
+        
+        return true;
+    }
+
+    /**
+     * @param array $args
+     * @return boolean
+     */
+    protected final function upload_action( array $args = array()){
+        
+        $uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
+
+        if( !is_null($uploader)){
+            $list = array();
+            foreach( $uploader->upload('upload') as $id => $meta ){
+                $list[$id] = \CODERS\Framework\Providers\File::new( $meta );
+            }
+            if( count( $list )){
+                var_dump($list);
+            }
+        }
+
+        $form = sprintf('<input type="hidden" name="MAX_FILE_SIZE" value="%s" /><input type="file" name="upload[]" multiple="true" /><input type="submit"/>',
+                10*255*255);
+
+        printf( '<form action="%s" method="post" encType="multipart/form-data" name="uploader">%s</form>' ,
+                $_SERVER['PHP_SELF'] .'?page=digital-creator-gallery&action=upload' ,
+                $form);
+
+        return true;
+    }
 
 
     protected final function error_action( array $args = array()){
