@@ -42,10 +42,9 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
         $uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
 
         if( !is_null($uploader)){
-            $list = array();
-            foreach( $uploader->upload('upload') as $id => $meta ){
-                $list[$id] = \CODERS\Framework\Providers\File::new( $meta );
-            }
+            $list = $uploader->upload('upload')->each( function( $meta ){
+                return \CODERS\Framework\Providers\File::new( $meta );
+            });
             if( count( $list )){
                 var_dump($list);
             }
