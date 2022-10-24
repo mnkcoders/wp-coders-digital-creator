@@ -8,15 +8,16 @@ class DigitalCreator extends CodersApp{
      */
     protected final function __construct(  ) {
         
-        $this->import('model')
-                ->import('models.calendar')
-                ->import('view')
-                ->import('provider')
-                ->import('providers.file')
-                ->import('providers.uploader');
+        $this->require('model')
+                ->require('models.calendar')
+                ->require('view')
+                ->require('provider')
+                ->require('providers.file')
+                ->require('providers.uploader');
         
         parent::__construct( );
     }
+    
     protected final function setupAdminMenu() {
         $menu = parent::setupFrameworkMenu();
         $menu['name'] = __('Digital Creator','digital_creator');

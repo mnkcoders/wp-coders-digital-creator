@@ -24,12 +24,14 @@ final class SetupAdminController extends \CODERS\Framework\Request{
         $db = new \CODERS\Framework\Query($this->endPoint());
         
         $schema = array(
-            'items' => array(
-                'id' => array( 'type' => 'incremental','size'=>8,'index'=>true,'required'=>true),
-                'name' => array( 'type' => 'text','size'=>32,'required'=>true),
-                'type' => array( 'type' => 'text','size'=>24,'required'=>true,'default'=>'general'),
-                'date_created' => array( 'type' => 'date_time'),
-                'date_updated' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
+            'gallery' => array(
+                'id' => array( 'type' => 'text','size'=>32,'index'=>true),
+                'name' => array( 'type' => 'text','size'=>64,'required'=>true),
+                'type' => array( 'type' => 'text','size'=>16,'required'=>true),
+                'size' => array( 'type' => 'number','size'=>8,'required'=>true,'default'=>'0'),
+                'storage' => array( 'type' => 'text','size'=>24,'required'=>true),
+                'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
+                'date_updated' => array( 'type' => 'date_time'),
             ),
         );
         
@@ -43,7 +45,7 @@ final class SetupAdminController extends \CODERS\Framework\Request{
         
         $db = new \CODERS\Framework\Query($this->endPoint());
         $schema = array(
-            'items'
+            'items','gallery'
         );
         $db->__uninstall($schema);
         

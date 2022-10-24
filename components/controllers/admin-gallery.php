@@ -11,6 +11,10 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
      */
     protected final function __construct( $endpoint , $route =  '' ) {
         
+        $this->require('models.file')
+                ->require('provider')
+                ->require('providers.uploader');
+        
         parent::__construct($endpoint, $route );
     }
     /**
@@ -18,6 +22,10 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
      * @return boolean
      */
     protected final function default_action(array $args = array()) {
+        
+        if(array_key_exists('uploaded', $args)){
+            var_dump($args['uploaded']);
+        }
         
         $view = $this->importView('gallery');
         if( !is_null($view)){
@@ -27,10 +35,25 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
         
         return false;
     }
+    
     protected final function file_action( array $args = array()){
         
         
         return true;
+    }
+    
+    protected final function save_action( array $args = array() ){
+            $data= array(
+              'name' => 'kuns-summer-export.gif',
+              'type' => 'image/gif',
+              'error' =>  0,
+              'id' => '8a05d4bd125934c52ddb80ae963342b5',
+              'size' => 12948,
+              'storage' => 'digital-creator.gallery'
+            );
+            $file = \CODERS\Framework\Models\File::new($data);
+            $file->save();
+            return true;
     }
 
     /**
@@ -39,25 +62,26 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
      */
     protected final function upload_action( array $args = array()){
         
-        $uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
+        //$uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
+        $uploader = \CODERS\Framework\Provider::create('uploader',array('storage'=>'digital-creator.gallery'));
 
         if( !is_null($uploader)){
-            $list = $uploader->upload('upload')->each( function( $meta ){
-                return \CODERS\Framework\Providers\File::new( $meta );
+            $list = $uploader->upload('upload')->each( function( $fileMeta ){
+                var_dump($fileMeta);
+                $file = \CODERS\Framework\Models\File::new($fileMeta);
+                $file->save();
+                return $file;
+                //return \CODERS\Framework\Providers\File::new( $fileMeta );
             });
-            if( count( $list )){
-                var_dump($list);
+            //var_dump($list);
+            $uploaded = array();
+            foreach( $list as $id => $resource ){
+                $uploaded[] = $resource->value('name');
             }
+            $args['uploaded'] = $uploaded;
         }
-
-        $form = sprintf('<input type="hidden" name="MAX_FILE_SIZE" value="%s" /><input type="file" name="upload[]" multiple="true" /><input type="submit"/>',
-                10*255*255);
-
-        printf( '<form action="%s" method="post" encType="multipart/form-data" name="uploader">%s</form>' ,
-                $_SERVER['PHP_SELF'] .'?page=digital-creator-gallery&action=upload' ,
-                $form);
-
-        return true;
+        
+        return $this->default_action($args);
     }
 
 
