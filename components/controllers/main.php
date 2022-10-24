@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die;
 
-final class MainController extends \CODERS\Framework\Request{
+final class MainController extends \CODERS\Framework\Response{
     
     /**
      * @param string $endpoint

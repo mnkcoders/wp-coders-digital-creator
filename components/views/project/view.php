@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die;
 
-final class AdminView extends \CODERS\Framework\View{
+final class ProjectView extends \CODERS\Framework\View{
     
     protected function __construct($endpoint) {
         

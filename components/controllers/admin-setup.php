@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 /**
  * 
  */
-final class SetupAdminController extends \CODERS\Framework\Request{
+final class SetupAdminController extends \CODERS\Framework\Response{
     
     /**
      * @param string $endpoint
@@ -19,17 +19,24 @@ final class SetupAdminController extends \CODERS\Framework\Request{
      */
     protected final function install_action( array $args = array()){
         
-        //var_dump($this);
-        
         $db = new \CODERS\Framework\Query($this->endPoint());
         
         $schema = array(
+            'projects' => array(
+                'id' => array( 'type' => 'text' ,'size'=>32),
+                'name' => array('type'=>'text', 'size'=> 32),
+                'description' => array('type'=>'longtext'),
+                'image' => array('type'=>'number'),
+                'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
+                'date_updated' => array( 'type' => 'date_time'),
+            ),
             'gallery' => array(
                 'id' => array( 'type' => 'text','size'=>32,'index'=>true),
                 'name' => array( 'type' => 'text','size'=>64,'required'=>true),
                 'type' => array( 'type' => 'text','size'=>16,'required'=>true),
                 'size' => array( 'type' => 'number','size'=>8,'required'=>true,'default'=>'0'),
                 'storage' => array( 'type' => 'text','size'=>24,'required'=>true),
+                'parent' => array( 'type' => 'text' , 'size' => 32, 'default' => '' ),
                 'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
                 'date_updated' => array( 'type' => 'date_time'),
             ),

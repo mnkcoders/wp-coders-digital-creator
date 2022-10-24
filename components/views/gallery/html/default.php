@@ -9,8 +9,11 @@
     <ul class="items">
     <?php foreach( $this->list_items() as $item ) : ?>
         <li class="item">
+            <?php if( $item->is_image ) : ?>
+            <img src="<?php print $item->url ?>" alt="<?php print $item->name ?>" />
+            <?php else : ?>
             <strong><?php print $item->name; ?></strong>
-            <em><?php print $item->level; ?></em>
+            <?php endif; ?>
         </li>
     <?php endforeach; ?>
     </ul>

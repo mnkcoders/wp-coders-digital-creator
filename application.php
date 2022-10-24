@@ -26,6 +26,7 @@ class DigitalCreator extends CodersApp{
         $menu['slug'] = $this->endPoint();
         $menu['children'] = array(
             $this->setupAdminGallery(),
+            $this->setupAdminSubscriber(),
             $this->setupAdminSettings(),
         );
 
@@ -51,6 +52,17 @@ class DigitalCreator extends CodersApp{
         $menu['name'] = __('Gallery','digital_creator');
         $menu['title'] = __('Gallery','digital_creator');
         $menu['slug'] = 'gallery';
+        return $menu;
+    }
+    /**
+     * @return array
+     */
+    private final function setupAdminSubscriber(){
+        $menu = parent::setupFrameworkMenu();
+        $menu['parent'] = $this->endPoint();
+        $menu['name'] = __('Subscribers','digital_creator');
+        $menu['title'] = __('Subscribers','digital_creator');
+        $menu['slug'] = 'subscriber';
         return $menu;
     }
 

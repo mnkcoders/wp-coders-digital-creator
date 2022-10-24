@@ -8,6 +8,15 @@ class GalleryModel extends \CODERS\Framework\Model{
     
     protected final function __construct($route, array $data = array()) {
 
+        $this->define('id', self::TYPE_TEXT, array( 'size'=>32))
+                ->define('name',self::TYPE_TEXT,array('size'=>64))
+                ->define('type',self::TYPE_TEXT,array('size'=>24))
+                ->define('size',self::TYPE_NUMBER,array('value'=>0))
+                ->define('storage',self::TYPE_TEXT,array('size'=>32))
+                ->define('parent',self::TYPE_TEXT,array('size'=>32))
+                ->define('date_created',self::TYPE_DATETIME)
+                ->define('date_updated',self::TYPE_DATETIME);
+        
         parent::__construct($route, $data);
     }
 
@@ -15,12 +24,28 @@ class GalleryModel extends \CODERS\Framework\Model{
      * @return array
      */
     protected final function listItems(){
-        $model = $this->endpoint().'.item';
-        return array(
-            parent::create($model,array('name'=>'item-1','level' => 'a')),
-            parent::create($model,array('name'=>'item-2','level' => 'b')),
-            parent::create($model,array('name'=>'item-3','level' => 'b')),
-            parent::create($model,array('name'=>'item-4','level' => 'c')),
-        );
+        //return $this->load($this->__model());
+        return $this->fill();
+    }
+    
+    protected final function getUrl(){
+        $url = \CodersApp::storage($this->value('storage'),true);
+        return sprintf('%s%s', $url,  $this->value('id'));
+    }
+    /**
+     * @return boolean
+     */
+    protected final function isImage(){
+        switch( $this->value('type') ){
+            //images and media
+            case 'image/jpg':
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+            case 'image/bmp':
+                return TRUE;
+            default:
+                return false;
+        }
     }
 }

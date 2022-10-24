@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 /**
  * 
  */
-final class GalleryAdminController extends \CODERS\Framework\Request{
+final class GalleryAdminController extends \CODERS\Framework\Response{
     
     /**
      * @param string $endpoint
@@ -29,7 +29,9 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
         
         $view = $this->importView('gallery');
         if( !is_null($view)){
-            $view->setModel($this->importModel('gallery'))->show();
+            $gallery = $this->importModel('gallery');
+            //var_dump($gallery->load());
+            $view->setModel($gallery)->show();
             return true;
         }
         
@@ -63,11 +65,14 @@ final class GalleryAdminController extends \CODERS\Framework\Request{
     protected final function upload_action( array $args = array()){
         
         //$uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
-        $uploader = \CODERS\Framework\Provider::create('uploader',array('storage'=>'digital-creator.gallery'));
-
+        $uploader = \CODERS\Framework\Provider::create('uploader',array(
+            'storage'=>'digital-creator.gallery',
+            'parent' => array_key_exists('parent', $args) && strlen($args['parent']) ? $args['parent'] : '',
+            ));
+            var_dump($uploader);
         if( !is_null($uploader)){
             $list = $uploader->upload('upload')->each( function( $fileMeta ){
-                var_dump($fileMeta);
+                //var_dump($fileMeta);
                 $file = \CODERS\Framework\Models\File::new($fileMeta);
                 $file->save();
                 return $file;
