@@ -4,7 +4,9 @@ defined('ABSPATH') or die;
 /**
  * Subscriptor Account Manager
  */
-class GalleryModel extends \CODERS\Framework\Model{
+class ContentModel extends \CODERS\Framework\Model{
+    
+    const STORAGE = 'gallery';
     
     protected final function __construct($route, array $data = array()) {
 
@@ -18,6 +20,12 @@ class GalleryModel extends \CODERS\Framework\Model{
                 ->define('date_updated',self::TYPE_DATETIME);
         
         parent::__construct($route, $data);
+    }
+    /**
+     * @return string
+     */
+    public final function storage(){
+        return $this->endpoint() . '.' . self::STORAGE;
     }
 
     /**
@@ -47,5 +55,32 @@ class GalleryModel extends \CODERS\Framework\Model{
             default:
                 return false;
         }
+    }
+    
+    /**
+     * @return boolean
+     */
+    public final function save(){
+        $ts = $this->__ts();
+        $db = $this->db();
+        $table = self::__model();
+        $result = $db->select($table , 'COUNT(*) AS `ids`' , array('id'=>$this->id) );
+        if( count($result) && $result[0]['ids'] > 0 ){
+            $this->change('date_updated',$ts,true);
+            //var_dump($this->updated());
+            return $db->update($table, $this->updated(), array('id'=>$this->id)) > 0;
+        }
+        else{
+            $this->change('date_updated',$ts)->change('date_created',$ts );
+            //var_dump($this->values());
+            return $db->insert($table, $this->values()) > 0;
+        }
+        return false;
+    }
+    
+    
+    public static final function new( array $data = array()){
+        $content = new ContentModel('', $data);
+        return $content;
     }
 }

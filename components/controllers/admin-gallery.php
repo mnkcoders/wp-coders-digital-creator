@@ -13,7 +13,9 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
         
         $this->require('models.file')
                 ->require('provider')
-                ->require('providers.uploader');
+                ->require('providers.file')
+                ->require('providers.uploader')
+                ->require('.models.content');
         
         parent::__construct($endpoint, $route );
     }
@@ -23,13 +25,15 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
      */
     protected final function default_action(array $args = array()) {
         
-        if(array_key_exists('uploaded', $args)){
-            var_dump($args['uploaded']);
-        }
-        
         $view = $this->importView('gallery');
         if( !is_null($view)){
-            $gallery = $this->importModel('gallery');
+            $gallery = $this->importModel('content');
+            if( isset($args['uploaded'])){
+                $view->importMessages( is_array($args['uploaded']) ?
+                        implode(', ', $args['uploaded']) :
+                            $args['uploaded'] );
+            }
+            //var_dump($gallery->storage());
             //var_dump($gallery->load());
             $view->setModel($gallery)->show();
             return true;
@@ -67,15 +71,19 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
         //$uploader = $this->importProvider('uploader', array('storage'=>'digital-creator.gallery'));
         $uploader = \CODERS\Framework\Provider::create('uploader',array(
             'storage'=>'digital-creator.gallery',
-            'parent' => array_key_exists('parent', $args) && strlen($args['parent']) ? $args['parent'] : '',
+            //'parent' => array_key_exists('parent', $args) && strlen($args['parent']) ? $args['parent'] : '',
             ));
-            var_dump($uploader);
+            //var_dump($uploader);
         if( !is_null($uploader)){
-            $list = $uploader->upload('upload')->each( function( $fileMeta ){
+            
+            $parent = array_key_exists('parent', $args) && strlen($args['parent']) ? $args['parent'] : '';
+            $list = $uploader->upload('upload')->each( function( $data ) use($parent){
                 //var_dump($fileMeta);
-                $file = \CODERS\Framework\Models\File::new($fileMeta);
-                $file->save();
-                return $file;
+                $data['parent'] = $parent;
+                //$file = \CODERS\Framework\Models\File::new($data);
+                $content = \CODERS\DigitalCreator\ContentModel::new($data);
+                $content->save();
+                return $content;
                 //return \CODERS\Framework\Providers\File::new( $fileMeta );
             });
             //var_dump($list);

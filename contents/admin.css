@@ -1,0 +1,96 @@
+/**
+ *
+ */
+
+.container.digital-creator ul.items{
+    list-style-type: none;
+    margin: 40px 0;
+    padding: 0;
+}
+.container.digital-creator ul.items:after{
+    clear: both;
+    content: '';
+    display: block;
+}
+.container.digital-creator ul.items > li.item{
+    box-sizing: border-box;
+    border: none;
+    background-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 4px rgba(0,0,0,.15);
+    border-radius: 2px;
+    transition: ease-in 250ms;
+    overflow: hidden;
+}
+.container.digital-creator ul.items > li.item:hover{
+    background-color: rgba(255,255,255,1);
+}
+.container.digital-creator ul.items > li.item > .content{
+    position: relative;
+    width: 100%;
+    height: 0;
+    display: block;
+    padding-bottom: 100%;
+    overflow: hidden;
+    transition: ease-in 450ms;
+    cursor: pointer;
+}
+.container.digital-creator ul.items > li.item > .content:hover{
+    transform: scale(1.1);
+}
+.container.digital-creator ul.items > li.item > .content img{
+    position: absolute;
+    top: 0; left: 0;
+    height: auto;
+    width: 100%;
+}
+@media only screen and (min-width: 480px) and (max-width: 599px){
+    .container.digital-creator ul.items > li.item{
+        display: inline-block;
+        width: 48%;
+        float: left;
+        vertical-align: top;
+        margin-bottom: 2%;
+    }
+    .container.digital-creator ul.items > li.item:not(:nth-child(2n)){
+        margin-right: 2%;
+    }
+}
+@media only screen and (min-width: 600px) and (max-width: 959px){
+    .container.digital-creator ul.items > li.item{
+        display: inline-block;
+        width: 32%;
+        float: left;
+        vertical-align: top;
+        margin-bottom: 2%;
+    }
+    .container.digital-creator ul.items > li.item:not(:nth-child(3n)){
+        margin-right: 2%;
+    }
+}
+@media only screen and (min-width: 960px) and (max-width: 1199px){
+    .container.digital-creator ul.items > li.item{
+        display: inline-block;
+        width: 24%;
+        float: left;
+        vertical-align: top;
+        margin-bottom: 1%;
+    }
+    .container.digital-creator ul.items > li.item:not(:nth-child(4n)){
+        margin-right: 1%;
+    }
+}
+@media only screen and (min-width: 1200px){
+    .container.digital-creator ul.items > li.item{
+        display: inline-block;
+        width: 12%;
+        float: left;
+        vertical-align: top;
+        margin-bottom: 0.5%;
+    }
+    .container.digital-creator ul.items > li.item:not(:nth-child(8n)){
+        margin-right: 0.57%;
+    }
+}
+
+
+

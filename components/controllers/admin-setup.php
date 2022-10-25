@@ -52,7 +52,7 @@ final class SetupAdminController extends \CODERS\Framework\Response{
         
         $db = new \CODERS\Framework\Query($this->endPoint());
         $schema = array(
-            'items','gallery'
+            'projects','gallery','subscribers'
         );
         $db->__uninstall($schema);
         
