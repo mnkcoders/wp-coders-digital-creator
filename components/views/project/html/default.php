@@ -1,10 +1,13 @@
 <?php defined('ABSPATH') or die; ?>
 <div class="content">
-    <?php print $this->open_form('item') ?>
-    <p><?php print $this->input_item ?></p>
-    <p><?php print $this->input_level ?></p>
-    <?php print $this->close_form() ?>
-    <?php print $this->html('button',array('class'=>'sender','value'=>'default'),'Send Default AJAX request') ?>
-    <?php print $this->html('button',array('class'=>'sender','value'=>'item'),'Send Item AJAX request') ?>
-    <?php print $this->html('button',array('class'=>'sender','value'=>'request'),'Send Input AJAX ') ?>
+    <?php if( $this->count_projects > 0 ) : ?>
+        <?php foreach( $this->list_projects as $project ): ?>
+        <div class="card <?php print $project->name ?>">
+        <?php var_dump($project); ?>
+        </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+    <?php print $this->action_project_new('new project',array(),'button button-primary project'); ?> 
+    <?php print $this->action('.project.new','new project',array(),'button button-primary project'); ?> 
+    <?php endif; ?>
 </div>

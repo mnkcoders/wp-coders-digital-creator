@@ -40,11 +40,23 @@ class DigitalCreator extends CodersApp{
         $menu['icon'] = 'dashicons-art';
         $menu['slug'] = $this->endPoint();
         $menu['children'] = array(
+            $this->setupAdminProjects(),
             $this->setupAdminGallery(),
             $this->setupAdminSubscriber(),
             $this->setupAdminSettings(),
         );
 
+        return $menu;
+    }
+    /**
+     * @return array
+     */
+    private final function setupAdminProjects(){
+        $menu = parent::setupFrameworkMenu();
+        $menu['parent'] = $this->endPoint();
+        $menu['name'] = __('Projects','digital_creator');
+        $menu['title'] = __('Projects','digital_creator');
+        $menu['slug'] = 'project';
         return $menu;
     }
     /**

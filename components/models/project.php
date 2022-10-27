@@ -12,6 +12,7 @@ class ProjectModel extends \CODERS\Framework\Model{
                 ->define('name',self::TYPE_TEXT)
                 ->define('description',self::TYPE_TEXTAREA)
                 ->define('image',self::TYPE_NUMBER)
+                ->define('content',self::TYPE_TEXT)
                 ->defineTimeStamps();
         
         parent::__construct($route, $data);

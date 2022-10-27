@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die;
 
-final class AdminController extends \CODERS\Framework\Response{
+final class ProjectAdminController extends \CODERS\Framework\Response{
     
     /**
      * @param string $endpoint
@@ -17,9 +17,11 @@ final class AdminController extends \CODERS\Framework\Response{
      */
     protected final function default_action(array $args = array()) {
         
-        $view = $this->importView('dashboard');
+        $view = $this->importView('project');
         if( !is_null($view)){
-            $view->setLayout('default')->show();
+            $view->setModel($this->importModel('project'))
+                    ->setLayout('default')
+                    ->show();
             return true;
         }
         else{
@@ -28,9 +30,22 @@ final class AdminController extends \CODERS\Framework\Response{
         return $this->error_action( $args );
     }
     /**
+     * 
      * @param array $args
      * @return boolean
      */
+    protected final function new_action( array $args = array( ) ){
+        
+        $view = $this->importView('project');
+        
+        if( !is_null($view)){
+            $view->setLayout('project-form')->show();
+        }
+        
+        
+        return false;
+    }
+
     protected final function error_action( array $args = array()){
         var_dump($this->list());
         var_dump($this->action(TRUE));
