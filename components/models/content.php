@@ -15,7 +15,7 @@ class ContentModel extends \CODERS\Framework\Model{
                 ->define('type',self::TYPE_TEXT,array('size'=>24))
                 ->define('size',self::TYPE_NUMBER,array('value'=>0))
                 ->define('storage',self::TYPE_TEXT,array('size'=>32))
-                ->define('parent',self::TYPE_TEXT,array('size'=>32))
+                ->define('parent',self::TYPE_TEXT,array('size'=>32,'value'=>''))
                 ->define('date_created',self::TYPE_DATETIME)
                 ->define('date_updated',self::TYPE_DATETIME);
         
@@ -27,18 +27,47 @@ class ContentModel extends \CODERS\Framework\Model{
     public final function storage(){
         return $this->endpoint() . '.' . self::STORAGE;
     }
-
+    /**
+     * @return string
+     */
+    protected final function getParent(){
+        return $this->value('parent');
+    }
+    /**
+     * @return boolean
+     */
+    protected final function isChild(){
+        return strlen($this->value('parent')) > 0;
+    }
+    /**
+     * @return string
+     */
+    protected final function getId(){
+        return $this->value('id');
+    }
+    /**
+     * @return number
+     */
+    protected final function countItems(){
+        return count( $this->listItems( ) );
+    }
     /**
      * @return array
      */
-    protected final function listItems(){
-        //return $this->load($this->__model());
-        return $this->fill();
+    protected final function listItems( $showall = false ){
+        $filters = $showall ? array() : array('parent'=>$this->getId());
+        return $this->fill( strval($this) , $filters );
     }
     
     protected final function getUrl(){
         $url = \CodersApp::storage($this->value('storage'),true);
         return sprintf('%s%s', $url,  $this->value('id'));
+    }
+    /**
+     * @return boolean
+     */
+    protected final function isItem(){
+        return strlen( $this->value('id') ) > 0;
     }
     /**
      * @return boolean

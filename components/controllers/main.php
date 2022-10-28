@@ -12,6 +12,31 @@ final class MainController extends \CODERS\Framework\Response{
         parent::__construct($endpoint, $route );
     }
     
+    /**
+     * 
+     * @param array $args
+     * @return boolean
+     */
+    protected final function default_action(array $args = array()) {
+
+        $id = isset($args['id']) ? $args['id'] : '';
+        
+        $gallery = strlen($id) ?
+                    \CODERS\Framework\Model::locate('digital-creator.content', $id) :
+                    $this->importModel('content');
+        
+        $view = $this->importView('main');
+        
+        if( !is_null($view)){
+            $view->setModel($gallery)->setLayout('gallery')->show();
+            return true;
+        }
+        
+        return false;
+    }
+
+
+    
     protected final function error_action( array $args = array()){
         var_dump($this->list());
         var_dump($this->action(TRUE));
@@ -33,10 +58,10 @@ final class MainController extends \CODERS\Framework\Response{
      * @param array $args
      * @return boolean
      */
-    protected  final function default_action(array $args = array()) {
+    protected  final function test_action(array $args = array()) {
         
         $model = $this->importModel('item');
-        $view = $this->importView('main');
+        $view = $this->importView('test');
 
         if($model !== FALSE ){
             if( $view !== false ){

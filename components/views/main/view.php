@@ -1,21 +1,20 @@
 <?php namespace CODERS\DigitalCreator;
 
 defined('ABSPATH') or die;
-
+/**
+ * 
+ */
 final class MainView extends \CODERS\Framework\View{
     
-    protected function __construct($endpoint) {
+    protected final function __construct($route) {
         
-        parent::__construct($endpoint);
+        parent::__construct($route);
 
-        $this->addScript('jquery')
-                ->addScript('dashboard-script',
-                        $this->contentUrl( 'dashboard-script.js' ) , '' ,
-                        array(
-                            'url' => admin_url('admin-ajax.php'),
-                            'nonce' => \DigitalCreator::nonce(),
-                        ));
+        $this->addStyle('digital-creator-style', $this->contentUrl( 'public.css' ), 'text/css');
         
     }
+    
 }
+
+
 

@@ -40,7 +40,7 @@ class DigitalCreator extends CodersApp{
         $menu['icon'] = 'dashicons-art';
         $menu['slug'] = $this->endPoint();
         $menu['children'] = array(
-            $this->setupAdminProjects(),
+            //$this->setupAdminProjects(),
             $this->setupAdminGallery(),
             $this->setupAdminSubscriber(),
             $this->setupAdminSettings(),
@@ -92,7 +92,6 @@ class DigitalCreator extends CodersApp{
         $menu['slug'] = 'subscriber';
         return $menu;
     }
-
     /**
      * @param array $input
      * @return array
@@ -106,7 +105,6 @@ class DigitalCreator extends CodersApp{
             'elapsed' => CodersApp::__elapsed()
         );
     }
-    
     protected final function item_ajax(){
         $item = \CODERS\Framework\Model::create('digital-creator.item');
         parent::__registerTs();
@@ -117,7 +115,6 @@ class DigitalCreator extends CodersApp{
             'elapsed' => CodersApp::__elapsed()
         );
     }
-
     /**
      * @return array
      */
@@ -131,7 +128,6 @@ class DigitalCreator extends CodersApp{
             'elapsed' => CodersApp::__elapsed()
         );
     }
-
     /**
      * @return string
      */
@@ -146,14 +142,14 @@ class DigitalCreator extends CodersApp{
         $db = new \CODERS\Framework\Query($this->endPoint());
         
         $schema = array(
-            'project' => array(
+            /*'project' => array(
                 'id' => array( 'type' => 'text' ,'size'=>32),
                 'name' => array('type'=>'text', 'size'=> 32),
                 'description' => array('type'=>'longtext'),
                 'image' => array('type'=>'number'),
                 'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
                 'date_updated' => array( 'type' => 'date_time'),
-            ),
+            ),*/
             'content' => array(
                 'id' => array( 'type' => 'text','size'=>32,'index'=>true),
                 'name' => array( 'type' => 'text','size'=>64,'required'=>true),
@@ -161,16 +157,23 @@ class DigitalCreator extends CodersApp{
                 'size' => array( 'type' => 'number','size'=>8,'required'=>true,'default'=>'0'),
                 'storage' => array( 'type' => 'text','size'=>24,'required'=>true),
                 'parent' => array( 'type' => 'text' , 'size' => 32, 'default' => '' ),
+                //'title' => array( 'type'=>'text','size'=>48,'default'=>''),
+                //'description' => array( 'type'=>'longtext','default'=>''),
+                'layout' => array('type'=>'text','size'=>24,'default'=>'gallery'),
                 'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
                 'date_updated' => array( 'type' => 'date_time'),
             ),
             'subscriber' => array(
                 'id' => array('type'=>'text','size'=>32,'index'=>true),
-                'name' => array('type'=>'text','size'=>32),
-                'email' => array('type'=>'text','size'=>64),
+                //'name' => array('type'=>'text','size'=>32),
+                //'email' => array('type'=>'text','size'=>64),
                 'role' => array('type'=>'text','size'=>24),
                 'date_created' => array( 'type' => 'date_time','default'=>'CURRENT_TIMESTAMP'),
                 'date_updated' => array( 'type' => 'date_time'),
+            ),
+            'tags' => array(
+                'content_id' => array('type'=>'text','size'=>32),
+                'tag' => array('type'=>'text','size'=>16),
             ),
         );
         

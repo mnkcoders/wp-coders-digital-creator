@@ -27,21 +27,27 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
         
         $view = $this->importView('gallery');
         if( !is_null($view)){
-            $gallery = $this->importModel('content');
+            
+            $id = isset($args['id']) ? $args['id'] : '';
+
+            $gallery = strlen($id) ?
+                    \CODERS\Framework\Model::locate('digital-creator.content', $id) :
+                    $this->importModel('content');
+
             if( isset($args['uploaded'])){
                 $view->importMessages( is_array($args['uploaded']) ?
                         implode(', ', $args['uploaded']) :
                             $args['uploaded'] );
             }
-            //var_dump($gallery->storage());
-            //var_dump($gallery->load());
+
             $view->setModel($gallery)->show();
+
             return true;
         }
         
         return false;
     }
-    
+
     protected final function file_action( array $args = array()){
         
         
