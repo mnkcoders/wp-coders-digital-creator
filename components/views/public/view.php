@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 /**
  * 
  */
-final class MainView extends \CODERS\Framework\View{
+final class PublicView extends \CODERS\Framework\View{
     
     protected final function __construct($route) {
         
