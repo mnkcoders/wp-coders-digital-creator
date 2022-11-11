@@ -26,12 +26,12 @@
     <ul class="items">
         <?php if( $this->count_items() ) : ?>
             <?php foreach( $this->list_items() as $item ) : ?>
-                <li class="item">
+                <li class="item <?php print $item->content_class ?>">
                     <a class="content" href="<?php print $this->action('.',array('id'=>$item->id),true) ?>" target="_self">
                     <?php if( $item->is_image() ) : ?>
                     <img src="<?php print $item->url ?>" alt="<?php print $item->name ?>" />
                     <?php else : ?>
-                    <strong><?php print $item->name; ?></strong>
+                    <span><?php print $item->name; ?></span>
                     <?php endif; ?>
                     </a>
                 </li>

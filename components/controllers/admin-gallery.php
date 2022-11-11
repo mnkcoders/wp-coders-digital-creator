@@ -84,13 +84,10 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
             
             $parent = array_key_exists('parent', $args) && strlen($args['parent']) ? $args['parent'] : '';
             $list = $uploader->upload('upload')->each( function( $data ) use($parent){
-                //var_dump($fileMeta);
                 $data['parent'] = $parent;
-                //$file = \CODERS\Framework\Models\File::new($data);
                 $content = \CODERS\DigitalCreator\ContentModel::new($data);
                 $content->save();
                 return $content;
-                //return \CODERS\Framework\Providers\File::new( $fileMeta );
             });
             //var_dump($list);
             $uploaded = array();

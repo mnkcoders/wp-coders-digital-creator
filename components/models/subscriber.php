@@ -11,7 +11,7 @@ class SubscriberModel extends \CODERS\Framework\Model{
     const STATUS_EXPIRED = 2;
     const STATUS_BANNED = 5;
     
-    protected final function __construct($route, array $data = array()) {
+    protected final function __construct(array $data = array()) {
         
         $this->define('id', self::TYPE_TEXT, array('size'=>32))
                 ->define('name',self::TYPE_EMAIL, array('size'=>32))
@@ -20,7 +20,7 @@ class SubscriberModel extends \CODERS\Framework\Model{
                 ->define('status', self::TYPE_NUMBER)
                 ->defineTimeStamps();
         
-        parent::__construct($route, $data);
+        parent::__construct( $data);
     }
     
     
@@ -40,3 +40,5 @@ class SubscriberModel extends \CODERS\Framework\Model{
         );
     }
 }
+
+

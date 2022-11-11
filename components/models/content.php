@@ -8,7 +8,7 @@ class ContentModel extends \CODERS\Framework\Model{
     
     const STORAGE = 'gallery';
     
-    protected final function __construct($route, array $data = array()) {
+    protected final function __construct(array $data = array()) {
 
         $this->define('id', self::TYPE_TEXT, array( 'size'=>32))
                 ->define('name',self::TYPE_TEXT,array('size'=>64))
@@ -19,7 +19,7 @@ class ContentModel extends \CODERS\Framework\Model{
                 ->define('date_created',self::TYPE_DATETIME)
                 ->define('date_updated',self::TYPE_DATETIME);
         
-        parent::__construct($route, $data);
+        parent::__construct( $data);
     }
     /**
      * @return string
@@ -85,7 +85,14 @@ class ContentModel extends \CODERS\Framework\Model{
                 return false;
         }
     }
-    
+    /**
+     * @return string
+     */
+    protected final function getContentClass(){
+        return $this->isImage() ? 'image' : 'file';
+    }
+
+
     /**
      * @return boolean
      */
@@ -109,7 +116,10 @@ class ContentModel extends \CODERS\Framework\Model{
     
     
     public static final function new( array $data = array()){
-        $content = new ContentModel('', $data);
+        $content = new ContentModel($data);
         return $content;
     }
 }
+
+
+
