@@ -27,24 +27,44 @@ body.digital-creator .header{
     box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
 
-body.digital-creator #sidebar-menu,
-body.digital-creator #sidebar-menu + .container.digital-creator{
-    float: left;
-    display: inline-block;
-    height: 100vh;
-}
 body.digital-creator #sidebar-menu{
+    position: fixed;
+    top: 0; left: 0;
+    bottom: 0;
     width: 20%;
     padding: 20px 0;
+    margin: 0;
+    z-index: 1;
+    transition: ease-in 250ms;
+    box-shadow: 1px 0 4px rgba(0,0,0,0.15);
 }
 body.digital-creator #sidebar-menu + .container.digital-creator{
-    width: 80%;
+    transition: ease-in 250ms;
+    margin: 0 0 0 100px;
+}
+body.digital-creator #sidebar-menu:not(.collapsed) + .container.digital-creator{
+    /*width: 80%;*/
+    margin-left: 20%;
+}
+body.digital-creator #sidebar-menu.collapsed{
+    width: 60px;
 }
 body.digital-creator #sidebar-menu ul.menu{
     margin: 80px 0 0;
     padding: 0;
     width: 100%;
     list-style-type: none;
+}
+body.digital-creator #sidebar-menu ul.menu > li.menu-item.bottom{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0 0 20px;
+}
+body.digital-creator #sidebar-menu ul.menu #collapse-button{
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
 }
 body.digital-creator #sidebar-menu ul.menu > li.menu-item > a{
     color: #fafafa;
@@ -57,6 +77,10 @@ body.digital-creator #sidebar-menu ul.menu > li.menu-item > a{
 body.digital-creator #sidebar-menu ul.menu > li.menu-item > a:hover,
 body.digital-creator #sidebar-menu ul.menu > li.menu-item > a:active{
     background-color: rgba(255,255,255,0.25);
+}
+body.digital-creator #sidebar-menu.collapsed ul.menu > li.menu-item > a{
+    color: transparent;
+    overflow: hidden;
 }
 
 

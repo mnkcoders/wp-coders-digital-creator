@@ -10,7 +10,8 @@ final class PublicView extends \CODERS\Framework\View{
         
         parent::__construct($route);
 
-        $this->addStyle('digital-creator-style', $this->contentUrl( 'public.css' ), 'text/css');
+        $this->addStyle('digital-creator-style', $this->contentUrl( 'public.css' ), 'text/css')
+                ->addScript('digital-creator',$this->contentUrl('public.js'));
         
     }
     
