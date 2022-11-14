@@ -24,27 +24,20 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
      * @return boolean
      */
     protected final function default_action(array $args = array()) {
-        
-        $view = $this->importView('gallery');
+        $view = $this->importView('admin');
         if( !is_null($view)){
-            
             $id = isset($args['id']) ? $args['id'] : '';
-
             $gallery = strlen($id) ?
                     \CODERS\Framework\Model::locate('digital-creator.content', $id) :
                     $this->importModel('content');
-
             if( isset($args['uploaded'])){
                 $view->importMessages( is_array($args['uploaded']) ?
                         implode(', ', $args['uploaded']) :
                             $args['uploaded'] );
             }
-
-            $view->setModel($gallery)->show();
-
+            $view->setModel($gallery)->setLayout('gallery')->show();
             return true;
         }
-        
         return false;
     }
 
@@ -99,8 +92,6 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
         
         return $this->default_action($args);
     }
-
-
     protected final function error_action( array $args = array()){
         var_dump($this->list());
         var_dump($this->action(TRUE));
@@ -108,3 +99,5 @@ final class GalleryAdminController extends \CODERS\Framework\Response{
         return FALSE;
     }
 }
+
+

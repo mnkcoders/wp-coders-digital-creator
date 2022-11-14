@@ -14,6 +14,15 @@ final class PublicView extends \CODERS\Framework\View{
         
     }
     
+    protected final function renderContent() {
+        
+        print '<!-- sidebar-menu --><div id="sidebar-menu" class="container theme sidebar">';
+        $this->__display('menu');
+        print '</div><!-- sidebar-menu -->';
+        
+        return parent::renderContent();
+    }
+    
 }
 
 
