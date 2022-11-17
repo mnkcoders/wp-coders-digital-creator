@@ -70,6 +70,13 @@ class ContentModel extends \CODERS\Framework\Model{
         return strlen( $this->value('id') ) > 0;
     }
     /**
+     * 
+     */
+    public final function file(){
+        return null;
+    }
+
+    /**
      * @return boolean
      */
     protected final function isImage(){
